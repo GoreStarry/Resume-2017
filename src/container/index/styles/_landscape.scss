@@ -1,0 +1,12 @@
+.Index {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.box__planets {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
