@@ -1,6 +1,9 @@
 <template lang="pug">
-.box__planet(@mouseenter="hoverEnter"
-      @mouseleave="hoverLeave" @click="zoomPlaent")
+.box__planet(
+      @mouseenter="hoverEnter"
+      @mouseleave="hoverLeave" 
+      @click="zoomInPlaent")
+  slot
   svg.ring.ring--en(viewBox="0,0,400,400")
     defs
       path#path__ring--en(d="M100,200a100,100 0 1,1 200,0a100,100 0 1,1 -200,0")
@@ -12,7 +15,7 @@
     text.text_ring.text_ring--en
       textPath(xlink:href="#path__ring--en" startOffset="20%" text-anchor="middle") | {{name_zh}} |
 
-  svg#Layer_1.planet(
+  svg.planet(
       x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;")
     path(
       :style="color_planet_style"
@@ -21,12 +24,12 @@
     polygon(
       style="fill:#4A8EC6;" 
       points="403.013,339.478 256.105,339.478 222.713,322.783 256.105,306.087 403.013,306.087 ")
-    rect(x="172.522" y="306.087" style="fill:#77AAD4;" width="83.578" height="33.391")
-    rect(x="256.1" y="239.304" style="fill:#4A8EC6;" width="155.726" height="33.391")
-    rect(x="72.348" y="306.087" style="fill:#A4C6E2;" width="66.783" height="33.391")      
-    path(style="fill:#77AAD4;" d="M77.651,439.652h133.931v-33.391H48.728C57.406,418.21,67.082,429.387,77.651,439.652z")
-    path(style="fill:#A4C6E2;" d="M4.909,205.913h150.918v-33.391H13.928C10.197,183.342,7.175,194.491,4.909,205.913z")
-    rect(x="189.217" y="172.522" style="fill:#77AAD4;" width="33.391" height="33.391")
+    rect.cloud(x="172.522" y="306.087" style="fill:#77AAD4;" width="83.578" height="33.391")
+    rect.cloud(x="256.1" y="239.304" style="fill:#4A8EC6;" width="155.726" height="33.391")
+    rect.cloud(x="72.348" y="306.087" style="fill:#A4C6E2;" width="66.783" height="33.391")      
+    path.cloud(style="fill:#77AAD4;" d="M77.651,439.652h133.931v-33.391H48.728C57.406,418.21,67.082,429.387,77.651,439.652z")
+    path.cloud(style="fill:#A4C6E2;" d="M4.909,205.913h150.918v-33.391H13.928C10.197,183.342,7.175,194.491,4.909,205.913z")
+    rect.cloud(x="189.217" y="172.522" style="fill:#77AAD4;" width="33.391" height="33.391")
     path(
       :style="color_planet_shadow_style" 
       d="M256,0c-23.106,0-45.49,3.08-66.783,8.819C298.213,38.196,378.435,137.721,378.435,256 s-80.221,217.804-189.217,247.181C210.51,508.92,232.894,512,256,512c141.385,0,256-114.615,256-256S397.385,0,256,0z")
@@ -37,12 +40,14 @@
 
 <script>
 import { TweenMax, TimelineMax } from 'gsap';
+
 export default {
-  name: 'Plaent02',
+  name: 'Planet',
   data() {
     return {
       tl_ring: new TimelineMax(),
       sub_planet_offsetLeft: false,
+      tl_zoom: false,
     }
   },
   props: {
@@ -51,6 +56,14 @@ export default {
     color_planet: String,
     color_planet_shadow: String,
     color_name: String,
+    planetOpen: [String, Boolean],
+  },
+  watch: {
+    planetOpen(newVal, oldVal) {
+      if (oldVal == this.name_en && newVal == false) {
+        this.zoomOutPlanet();
+      }
+    },
   },
   mounted() {
     var sub = this.$el;
@@ -65,6 +78,7 @@ export default {
       }
       return xPosition;
     }
+
   },
   computed: {
     color_planet_style() {
@@ -75,18 +89,34 @@ export default {
     },
   },
   methods: {
-    zoomPlaent() {
-      var sub = this.$el.querySelector(".svg__sub");
-      console.log(sub.offsetWidth / 2);
-      TweenMax.to(sub, 0.5, {
-        scale: 18,
-        y: 300,
+    zoomInPlaent() {
+      var sub = this.$el.querySelector(".planet");
+      var cloud = this.$el.querySelectorAll(".cloud");
+
+      this.tl_zoom = new TimelineMax().to(sub, 0.5, {
+        scale: 22,
+        y: window.innerHeight,
         x: window.innerWidth / 2 - this.sub_planet_offsetLeft,
         transformOrigin: "center center",
         force3D: false,
+        ease: Power4.easeIn,
+        zIndex: 1,
+
+      }).to(cloud, 0.1, {
+        opacity: 0,
+        onComplete: () => {
+          this.$emit("openPlanet", this.name_en)
+        },
+        onReverseComplete: () => {
+
+        }
       })
     },
+    zoomOutPlanet() {
+      this.tl_zoom.reverse();
+    },
     hoverEnter() {
+      console.log('enter planet');
       const ring = this.$el.querySelector('.ring');
 
       TweenMax.to(ring, 0.5, {
@@ -106,23 +136,33 @@ export default {
         });
       }
 
-      console.log('enter');
     },
     hoverLeave() {
+      console.log('enter leave');
       const ring = this.$el.querySelector('.ring');
       TweenMax.to(ring, 0.5, {
         scale: 0.4,
         rotation: "+=90",
       })
-      console.log('leave');
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+$planet_size: 100px;
+
 .box__planet {
   position: relative;
+  top: calc( 50% - #{$planet_size});
+}
+
+
+.planet {
+  position: relative;
+  cursor: pointer;
+  width: $planet_size;
+  height: $planet_size;
 }
 
 .svg__sub {
@@ -173,12 +213,5 @@ export default {
     // transform-origin: center;
     // transform: rotate(180deg);
   }
-}
-
-.planet {
-  position: relative;
-  cursor: pointer;
-  width: 100px;
-  height: 100px;
 }
 </style>

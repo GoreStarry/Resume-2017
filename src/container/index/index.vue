@@ -1,44 +1,82 @@
 <template>
   <div class="Index">
-    <div id="stars1" class="stars"></div>
-    <div id="stars2" class="stars"></div>
-    <div id="stars3" class="stars"></div>
-    <div class="box__planets">
-      <planet-02 name_en="Skills" name_zh="技能" color_planet="#d12c2c" color_planet_shadow="#791313" color_name="#5edafd"></planet-02>
-      <planet-02 name_en="Work" name_zh="作品集" color_planet="#1D71B8" color_planet_shadow="#134a79" color_name="#5edafd"></planet-02>
-      <planet-02 name_en="About Me" name_zh="關於我" color_planet="#1aac16" color_planet_shadow="#127020" color_name="#5edafd"></planet-02>
+    <starry-bg></starry-bg>
+    <div :style="{height: planetBoxHeight}" class="box__planets">
+      <planet v-for="planet in planet_datas" :planetOpen="planet_open" :key="planet.name_en" @openPlanet="openPlanet" :name_en="planet.name_en" :name_zh="planet.name_zh" :color_planet="planet.color_planet" :color_planet_shadow="planet.color_planet_shadow" :color_name="planet.color_name"></planet>
+      <!--<planet-02 @openPlanet="openPlanet" name_en="Skills" name_zh="技能" color_planet="#d12c2c" color_planet_shadow="#791313" color_name="#5edafd"></planet-02>-->
+      <!--<planet-02 @openPlanet="openPlanet" name_en="Work" name_zh="作品集" color_planet="#1D71B8" color_planet_shadow="#134a79" color_name="#5edafd"></planet-02>-->
+      <!--<planet-02 @openPlanet="openPlanet" name_en="About Me" name_zh="關於我" color_planet="#1aac16" color_planet_shadow="#127020" color_name="#5edafd"></planet-02>-->
+    </div>
+    <div v-show="planet_open" class="box__detail">
+      <img @click="closePlanet" v-show="planet_open" class="btn__closePlanet" src="./images/repeat.svg" alt="">
+      <skill-detail @updatePlanetBoxHeight="updatePlanetBoxHeight" :planetOpen="planet_open==planet_datas[0].name_en" :planetColor="planet_datas[0].color_planet"></skill-detail>
+      <works-detail @updatePlanetBoxHeight="updatePlanetBoxHeight" :planetOpen="planet_open==planet_datas[1].name_en" :planetColor="planet_datas[1].color_planet"></works-detail>
+      <aboutme-detail @updatePlanetBoxHeight="updatePlanetBoxHeight" :planetOpen="planet_open==planet_datas[2].name_en" :planetColor="planet_datas[2].color_planet"></aboutme-detail>
     </div>
     <!--<svg-cover v-if="cover_mount" @unmountCover="unmountCover"></svg-cover>-->
   </div>
 </template>
 
 <script> 
-import Planet01 from './components/Planet/Planet01.vue';
-import Planet02 from './components/Planet/Planet02.vue';
+import StarryBG from './components/StarryBg/StarryBg.vue';
+import Planet from './components/Planet/Planet.vue';
 import Cover from './components/Cover/Cover.vue';
+import Skills from './components/Skills/Skills.vue';
+import AboutMe from './components/AboutMe/AboutMe.vue';
+import Works from './components/Works/Works.vue';
+
 export default {
   name: 'Index',
   components: {
-    'planet-01': Planet01,
-    'planet-02': Planet02,
+    'starry-bg': StarryBG,
+    'planet': Planet,
     'svg-cover': Cover,
+    'skill-detail': Skills,
+    'aboutme-detail': AboutMe,
+    'works-detail': Works,
   },
   data() {
     return {
       cover_mount: true,
       planet_open: false,
+      planetBoxHeight: false,
+      planet_datas: [
+        {
+          name_en: "Skills",
+          name_zh: "技能",
+          color_planet: "#d12c2c",
+          color_planet_shadow: "#791313",
+          color_name: "#5edafd",
+        }, {
+          name_en: "Works",
+          name_zh: "作品集",
+          color_planet: "#1D71B8",
+          color_planet_shadow: "#134a79",
+          color_name: "#5edafd",
+        }, {
+          name_en: "About Me",
+          name_zh: "關於我",
+          color_planet: "#179013",
+          color_planet_shadow: "#127020",
+          color_name: "#5edafd",
+        }
+      ],
     }
   },
   methods: {
     unmountCover() {
       this.cover_mount = false;
     },
-    openPlanet(planet_name) {// 'Skill'||'Work'||'AboutMe'
+    openPlanet(planet_name) {
       this.planet_open = planet_name;
     },
     closePlanet() {
       this.planet_open = false;
     },
+    updatePlanetBoxHeight(height) {
+      console.log('set height:' + height);
+      this.planetBoxHeight = height;
+    }
   }
 } 
 </script>
@@ -46,90 +84,54 @@ export default {
 <style lang="scss" scoped>
 @import './styles/index.scss';
 
+.Index {
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: center;
+  // align-items: center;
+  // min-height: 100vh;
+}
+
 .box__planets {
-  position: relative;
-}
-
-// design by https://codepen.io/saransh/pen/BKJun
-@function multiple-box-shadow ($n) {
-  $value: '#{random(2000)}px #{random(2000)}px #FFF';
-  @for $i from 2 through $n {
-    $value: '#{$value} , #{random(2000)}px #{random(2000)}px #FFF'
-  }
-  @return unquote($value)
-}
-
-$shadows-small: multiple-box-shadow(700);
-$shadows-medium: multiple-box-shadow(200);
-$shadows-big: multiple-box-shadow(100);
-
-
-.stars {
+  box-sizing: border-box;
   position: absolute;
   left: 0;
   top: 0;
+  width: 100vw;
+  height: 100vh;
+  padding: 0 5rem;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-start;
 }
 
-#stars1 {
-  width: 1px;
-  height: 1px;
-  background: transparent;
-  box-shadow: $shadows-small;
-  animation: animStar 250s linear infinite;
-
-  &:after {
-    content: " ";
-    position: absolute;
-    top: 2000px;
-    width: 1px;
-    height: 1px;
-    background: transparent;
-    box-shadow: $shadows-small;
-  }
+.planet__active {
+  z-index: 1;
 }
 
-#stars2 {
-  width: 2px;
-  height: 2px;
-  background: transparent;
-  box-shadow: $shadows-medium;
-  animation: animStar 300s linear infinite;
-
-  &:after {
-    content: " ";
-    position: absolute;
-    top: 2000px;
-    width: 2px;
-    height: 2px;
-    background: transparent;
-    box-shadow: $shadows-medium;
-  }
-}
-
-#stars3 {
-  width: 3px;
-  height: 3px;
-  background: transparent;
-  box-shadow: $shadows-big;
-  animation: animStar 350s linear infinite;
-
-  &:after {
-    content: " ";
-    position: absolute;
-    top: 2000px;
-    width: 3px;
-    height: 3px;
-    background: transparent;
-    box-shadow: $shadows-big;
-  }
-}
-
-@keyframes animStar {
-  from {
-    transform: translateX(0px)
-  }
-  to {
-    transform: translateX(-2000px);
+.box__detail {
+  width: 100%;
+  position: relative;
+  z-index: 2;
+  @at-root {
+    .btn__closePlanet {
+      position: fixed;
+      top: 5rem;
+      right: 5rem;
+      transition: 0.2s linear;
+      border-radius: 0.5rem;
+      border: solid 1px white;
+      padding: 0.5rem;
+      transform-origin: center;
+      cursor: pointer;
+      transform: scaleX(-1);
+      &:hover {
+        transform: scale(-1.2, 1.2);
+      }
+    }
   }
 }
 </style>
