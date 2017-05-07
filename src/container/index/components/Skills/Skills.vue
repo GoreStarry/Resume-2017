@@ -1,7 +1,7 @@
 <template lang="pug">
 .box__Skills(v-show="planetOpen")
   header
-    h1 Skills
+    //- h1 Skills
   //- .container__bg(:style="{backgroundColor: planetColor}")
   .container__bg
     section
@@ -18,11 +18,14 @@
 </template>
 
 <script>
+import { TweenMax, TimelineMax } from 'gsap';
+let tl__detail;
 export default {
   name: 'Skills',
   props: {
     planetOpen: Boolean,
     planetColor: String,
+    tl__detail: false,
   },
   watch: {
     planetOpen(newValue, oldValue) {
@@ -31,33 +34,58 @@ export default {
           this.animationIn();
         }
         else {
+          this.$emit('updatePlanetBoxHeight', '100vh')
           this.animationOut();
         }
       }
     }
   },
+  updated() {
+    var boxHeight = this.$el.offsetHeight;
+    if (boxHeight > window.innerHeight) {
+      this.$emit('updatePlanetBoxHeight', boxHeight + 'px')
+    }
+  },
   methods: {
     animationIn() {
       var h3 = this.$el.querySelectorAll('h3');
-      TweenMax.staggerFrom(h3, 0.8, {
-        opacity: 0,
-        x: -50,
-      }, 0.2)
       var p = this.$el.querySelectorAll('p');
-      TweenMax.staggerFrom(p, 0.5, {
-        delay: 1,
-        opacity: 0,
-        x: -50,
-      }, 0.2)
+      tl__detail = new TimelineMax()
+        .staggerFromTo(h3, 0.8, {
+          delay: 0.5,
+          opacity: 0,
+          x: -50,
+        }, {
+          opacity: 1,
+          x: 0,
+        }, 0.2)
+        .staggerFromTo(p, 0.5, {
+          opacity: 0,
+          x: -50,
+        }, {
+          opacity: 1,
+          x: 0,
+        }, 0.2, '-=0.5')
     },
     animationOut() {
-      console.log('out');
+      // console.log('out');
+      tl__detail.reverse();
     }
   },
 }
 </script>
 
 <style lang="scss">
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 5s
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0
+}
+
 $planet_margin_top: 3vh;
 
 .box__Skills {

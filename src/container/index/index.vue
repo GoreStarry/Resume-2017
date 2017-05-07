@@ -84,6 +84,11 @@ export default {
 <style lang="scss" scoped>
 @import './styles/index.scss';
 
+.fade-enter,
+.fade-leave-to {
+  opacity: 0
+}
+
 .Index {
   // display: flex;
   // flex-direction: column;
@@ -119,6 +124,7 @@ export default {
   @at-root {
     .btn__closePlanet {
       position: fixed;
+      z-index: 1;
       top: 5rem;
       right: 5rem;
       transition: 0.2s linear;

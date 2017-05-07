@@ -4,7 +4,7 @@
       @mouseleave="hoverLeave" 
       @click="zoomInPlaent")
   slot
-  svg.ring.ring--en(viewBox="0,0,400,400")
+  svg.ring.ring--en(viewBox="0 0 400 400")
     defs
       path#path__ring--en(d="M100,200a100,100 0 1,1 200,0a100,100 0 1,1 -200,0")
     path.stroke_assist(d="M70,200a130,130 0 1,0 260,0a130,130 0 1,0 -260,0")
@@ -14,9 +14,11 @@
       textPath(xlink:href="#path__ring--en" startOffset="70%" text-anchor="middle") | {{name_en}} |
     text.text_ring.text_ring--en
       textPath(xlink:href="#path__ring--en" startOffset="20%" text-anchor="middle") | {{name_zh}} |
-
+  -var tile_padding = 50;
   svg.planet(
-      x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;")
+      x="0px" y="0px" viewBox=`0 ${-tile_padding} 512 ${512+tile_padding*2}` style="enable-background:new 0 0 512 512;")
+    defs
+      path#path__title(d="M16,256a240,240 0 1,1 480,0a240,240 0 1,1 -480,0")
     path(
       :style="color_planet_style"
       d="M434.087,256c0-256-244.87-247.185-244.87-247.185C107.153,30.91,41.403,92.802,13.92,172.52 l15.763,22.034L4.897,205.911C1.685,222.11,0,238.858,0,256c0,56.145,18.074,108.07,48.721,150.271l48.903,19.327l-19.968,14.059 c30.739,29.856,68.951,52.061,111.561,63.539C189.217,503.196,434.087,512,434.087,256z"
@@ -33,9 +35,13 @@
     path(
       :style="color_planet_shadow_style" 
       d="M256,0c-23.106,0-45.49,3.08-66.783,8.819C298.213,38.196,378.435,137.721,378.435,256 s-80.221,217.804-189.217,247.181C210.51,508.92,232.894,512,256,512c141.385,0,256-114.615,256-256S397.385,0,256,0z")
+    //- g
+    //-   use(xlink:href="#path__title")
+    text
+      textPath.text__title(xlink:href="#path__title" startOffset="12%" text-anchor="middle") {{name_en}}
 
-  svg.svg__sub(viewBox="0,0,100,100")
-    circle.sub_planet(:style="color_planet_style" cx="50" cy="50" r="50")
+  //- svg.svg__sub(viewBox="0,0,100,100")
+  //-   circle.sub_planet(:style="color_planet_style" cx="50" cy="50" r="50")
 </template>
 
 <script>
@@ -91,26 +97,33 @@ export default {
   methods: {
     zoomInPlaent() {
       var sub = this.$el.querySelector(".planet");
+      var title = this.$el.querySelector(".text__title")
       var cloud = this.$el.querySelectorAll(".cloud");
 
-      this.tl_zoom = new TimelineMax().to(sub, 0.5, {
-        scale: 22,
-        y: window.innerHeight,
-        x: window.innerWidth / 2 - this.sub_planet_offsetLeft,
-        transformOrigin: "center center",
-        force3D: false,
-        ease: Power4.easeIn,
-        zIndex: 1,
-
-      }).to(cloud, 0.1, {
-        opacity: 0,
-        onComplete: () => {
-          this.$emit("openPlanet", this.name_en)
-        },
-        onReverseComplete: () => {
-
-        }
-      })
+      this.tl_zoom = new TimelineMax()
+        .to(sub, 0.5, {
+          scale: 22,
+          y: window.innerHeight,
+          x: window.innerWidth / 2 - this.sub_planet_offsetLeft,
+          transformOrigin: "center center",
+          force3D: false,
+          ease: Power4.easeIn,
+          zIndex: 1,
+          onComplete: () => {
+            this.$emit("openPlanet", this.name_en)
+          },
+        })
+        .to(title, 0.5, {
+          opacity: 1,
+          attr: {
+            startOffset: '25%',
+          }
+        })
+        .to(cloud, 0.1, {
+          opacity: 0,
+          onReverseComplete: () => {
+          }
+        })
     },
     zoomOutPlanet() {
       this.tl_zoom.reverse();
@@ -154,15 +167,20 @@ $planet_size: 100px;
 
 .box__planet {
   position: relative;
-  top: calc( 50% - #{$planet_size});
+  top: calc( 50% - #{$planet_size/2});
 }
 
+.text__title {
+  font-size: 3rem;
+  fill: white;
+  opacity: 0;
+}
 
 .planet {
   position: relative;
   cursor: pointer;
   width: $planet_size;
-  height: $planet_size;
+  height: 120px;
 }
 
 .svg__sub {
