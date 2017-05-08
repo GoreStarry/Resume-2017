@@ -122,7 +122,7 @@ export default {
 
       if (this.planet_offsetLeft) { // landscape
         x = window.innerWidth / 2 - this.planet_offsetLeft;
-        y = window.innerHeight;
+        y = 1250 - window.innerHeight / 2; // 1100 = planet heiht 100px * scale 22 / 2
       } else { // portrait
         x = false;
         y = window.innerHeight * 1.7 - this.planet_offsetTop;
@@ -157,9 +157,8 @@ export default {
       this.tl_zoom.reverse();
     },
     hoverEnter() {
+      const ring = this.$el.querySelector('.ring');
       if (window.innerWidth >= window.innerHeight) {
-        const ring = this.$el.querySelector('.ring');
-
         TweenMax.to(ring, 0.5, {
           scale: 0.9,
           rotation: '+=45',
@@ -202,6 +201,8 @@ $planet_size: 100px;
   font-size: 3rem;
   fill: white;
   opacity: 0;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: bold;
 }
 
 .planet {

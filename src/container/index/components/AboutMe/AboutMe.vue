@@ -24,7 +24,7 @@ transition( :duration="{ enter: 0, leave: 500 }")
 
         h3 [ 技術分享 ]
         p 
-          a(href="http://slides.com/gorestarry/deck-2#/") WebVR vs Chinese@Taipei WebGL&WebVR
+          a(href="http://slides.com/gorestarry/deck-2#/") WebVR vs Chinese @Taipei WebGL&WebVR
         p
           a(href="https://www.youtube.com/watch?v=bnorojYDays&t=265s") Draft.js @線上React讀書會
         p
