@@ -128,6 +128,9 @@ export default {
       }
 
       this.tl_zoom = new TimelineMax()
+        .set(sub, {
+          zIndex: 1,
+        })
         .to(sub, 0.5, {
           scale: 22,
           x,
@@ -135,7 +138,6 @@ export default {
           transformOrigin: "center center",
           force3D: false,
           ease: Power4.easeIn,
-          zIndex: 1,
         })
         .to(title, 0.5, {
           opacity: 1,
