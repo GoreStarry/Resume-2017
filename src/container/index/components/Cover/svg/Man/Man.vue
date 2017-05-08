@@ -87,6 +87,12 @@ export default {
     }
   },
   mounted() {
+    // for firefox tranform origin problem
+    var eye_w__man = this.$el.getElementById('eye_w__man');
+    TweenMax.set(eye_w__man, {
+      transformOrigin: "center center",
+      rotation: 60,
+    })
     this.digNoseAnimation()
   },
   beforeDestroy() {
@@ -190,9 +196,8 @@ export default {
 }
 
 #eye_w__man {
+  // rotation by tweenMax because of firefox not support transform-origin:'center'
   fill: white;
-  transform-origin: center;
-  transform: rotate(60deg);
   stroke-width: 2;
 }
 

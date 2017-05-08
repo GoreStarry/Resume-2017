@@ -30,7 +30,7 @@ svg.ship(@click.once="shakeNameplate" viewBox=`0 0 ${viewBox_size} ${viewBox_siz
   
   g#g_nameplate
     rect.nameplate__bg(x=`${viewBox_size/2 - nameplate_width/2}` y=`338` rx="10" ry="10" width=`${nameplate_width}` height=`${nameplate_height}` fill="orange")
-    text.text__name(x=`${viewBox_size/2}`, y=`343` text-anchor="middle" alignment-baseline="hanging") Gore Wang
+    text.text__name(x=`${viewBox_size/2}`, y=`356` text-anchor="middle" alignment-baseline="hanging") Gore Wang
       
 </template>
 

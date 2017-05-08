@@ -36,14 +36,13 @@ $shadows-big: multiple-box-shadow(100);
 #stars1 {
   width: 1px;
   height: 1px;
-  background: transparent;
-  box-shadow: $shadows-small;
+  background: transparent; // box-shadow: $shadows-small;
   animation: animStar 250s linear infinite;
 
   &:after {
     content: " ";
     position: absolute;
-    top: 2000px;
+    top: 0px;
     width: 1px;
     height: 1px;
     background: transparent;
@@ -54,14 +53,13 @@ $shadows-big: multiple-box-shadow(100);
 #stars2 {
   width: 2px;
   height: 2px;
-  background: transparent;
-  box-shadow: $shadows-medium;
+  background: transparent; // box-shadow: $shadows-medium;
   animation: animStar 300s linear infinite;
 
   &:after {
     content: " ";
     position: absolute;
-    top: 2000px;
+    top: 0px;
     width: 2px;
     height: 2px;
     background: transparent;
@@ -79,7 +77,7 @@ $shadows-big: multiple-box-shadow(100);
   &:after {
     content: " ";
     position: absolute;
-    top: 2000px;
+    top: 0px;
     width: 3px;
     height: 3px;
     background: transparent;

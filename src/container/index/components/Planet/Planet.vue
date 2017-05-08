@@ -85,7 +85,6 @@ export default {
   },
   methods: {
     getPlanetOffset() {
-      console.log('get size');
       var planet = this.$el;
       if (window.innerWidth >= window.innerHeight) { // landscape
         this.planet_offsetLeft = getPositionX(planet) + planet.offsetWidth / 2;

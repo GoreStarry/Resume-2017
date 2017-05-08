@@ -114,7 +114,6 @@ export default {
       }
     },
     animationIn() {
-      console.log('in');
       var box__work = this.$el.querySelectorAll('.box__work');
       // var p = this.$el.querySelectorAll('p');
       tl__detail = new TimelineMax({
@@ -129,11 +128,9 @@ export default {
         }, 0.2)
     },
     animationOut() {
-      console.log('out');
       tl__detail.timeScale(5).reverse();
     },
     scrollTop() {
-      console.log(this.$el.innerHeight);
       if (this.$el.offsetHeight > window.innerHeight) {
         TweenMax.to(window, 0.1, {
           scrollTo: 0,

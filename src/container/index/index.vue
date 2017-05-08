@@ -84,7 +84,6 @@ export default {
       this.planet_open = false;
     },
     updatePlanetBoxHeight(height) {
-      console.log('set height:' + height);
       this.planetBoxHeight = height;
     }
   }
