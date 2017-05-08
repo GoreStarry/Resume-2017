@@ -1,20 +1,28 @@
 <template lang="pug">
-.box__Skills(v-show="planetOpen")
-  header
-    //- h1 Skills
-  //- .container__bg(:style="{backgroundColor: planetColor}")
-  .container__bg
-    section
-      h3 Front-End：
-      p 【 Good 】： ES6、React、GSAP(GreenSock)、A-frame(WebVR)、Sass(SCSS)
-      p 【 Competent 】： Vue.js、AngularJS(1)、Rx.js、Pug、
-      p 【 Tool 】： Webpack、Gulp、Git、Mercurial(hg)、npm...
-      h3 Back-End：
-      p 【 Competent 】： MongoDB(Mongoose)、Express、
-      p 【 Limited 】：php、MySQL、
-      h3 Design：
-      p 【 Graphic 】：Adobe Photoshop、Illustrator、
-      p 【 3D 】：PTC Creo Elements/Direct、Pro/E、
+transition( :duration="{ enter: 0, leave: 500 }")
+  .box__Skills(v-show="planetOpen")
+    header
+      //- h1 Skills
+    //- .container__bg(:style="{backgroundColor: planetColor}")
+    .container__bg
+      section
+        h3 Front-End：
+        p 【 Good 】： 
+          span ES6、React、GSAP(GreenSock)、A-frame(WebVR)、Sass(SCSS)
+        p 【 Competent 】： 
+          span Vue.js、AngularJS(1)、Rx.js、Pug、Nightwatch、Chai、Sinon...
+        p 【 Tool 】： 
+          span Webpack、Gulp、Git、Mercurial(hg)、npm...
+        h3 Back-End：
+        p 【 Competent 】： 
+          span MongoDB(Mongoose)、Express、
+        p 【 Limited 】：
+          span php、MySQL、
+        h3 Design：
+        p 【 Graphic 】：
+          span Adobe Photoshop、Illustrator (Limited)、
+        p 【 3D 】：
+          span PTC Creo Elements/Direct、Pro/E、
 </template>
 
 <script>
@@ -25,34 +33,40 @@ export default {
   props: {
     planetOpen: Boolean,
     planetColor: String,
-    tl__detail: false,
   },
   watch: {
     planetOpen(newValue, oldValue) {
       if (newValue !== oldValue) {
-        if (newValue) {// open
-          this.animationIn();
-        }
-        else {
-          this.$emit('updatePlanetBoxHeight', '100vh')
+        if (!newValue) {
           this.animationOut();
         }
       }
     }
   },
   updated() {
-    var boxHeight = this.$el.offsetHeight;
-    if (boxHeight > window.innerHeight) {
-      this.$emit('updatePlanetBoxHeight', boxHeight + 'px')
+    if (this.planetOpen) {
+      this.extendBoxHeight();
+      this.animationIn();
     }
   },
+  beforeDestroy() {
+    tl__detail.kill();
+  },
   methods: {
+    extendBoxHeight() {
+      var boxHeight = this.$el.offsetHeight;
+      if (boxHeight > window.innerHeight) {
+        this.$emit('updatePlanetBoxHeight', boxHeight + 'px')
+      }
+    },
     animationIn() {
       var h3 = this.$el.querySelectorAll('h3');
       var p = this.$el.querySelectorAll('p');
-      tl__detail = new TimelineMax()
+      tl__detail = new TimelineMax({
+        onReverseComplete: this.scrollTop
+      })
         .staggerFromTo(h3, 0.8, {
-          delay: 0.5,
+          delay: 10,
           opacity: 0,
           x: -50,
         }, {
@@ -68,24 +82,26 @@ export default {
         }, 0.2, '-=0.5')
     },
     animationOut() {
-      // console.log('out');
-      tl__detail.reverse();
+      tl__detail.timeScale(10).reverse();
+    },
+    scrollTop() {
+      if (this.$el.offsetHeight > window.innerHeight) {
+        TweenMax.to(window, 0.1, {
+          scrollTo: 0,
+          onComplete: this.resetPlantBoxHeight
+        });
+      } else {
+        this.resetPlantBoxHeight();
+      }
+    },
+    resetPlantBoxHeight() {
+      this.$emit('updatePlanetBoxHeight', '100vh')
     }
   },
 }
 </script>
 
-<style lang="scss">
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 5s
-}
-
-.fade-enter,
-.fade-leave-to {
-  opacity: 0
-}
-
+<style lang="scss" scoped>
 $planet_margin_top: 3vh;
 
 .box__Skills {
@@ -124,5 +140,9 @@ header {
 section {
   padding: 0 1.5rem;
   transform: translateY(-5rem);
+}
+
+@media screen and (orientation: portrait) {
+  @import './styles/_port_Skills.scss'
 }
 </style>

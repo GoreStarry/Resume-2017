@@ -1,0 +1,51 @@
+$planet_padding_top: 40vh;
+.box__AboutMe {
+  padding-top: $planet_padding_top;
+}
+
+header {
+  min-height: #{ 50vh - $planet_padding_top };
+  h2 {
+    font-size: 3rem;
+  }
+}
+
+$p_padding: 2rem;
+section {
+  h3 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    &:not(:first-of-type) {
+      margin-top: 3.5rem;
+    }
+  }
+  p {
+    padding: 0 $p_padding;
+    font-size: 1.4rem;
+    line-height: 5rem;
+    text-indent: 0;
+    span {
+      font-weight: bold;
+      text-shadow: 5px 5px 5px rgba(black, 0.5);
+    }
+    a {
+      font-weight: bold;
+      color: white;
+    }
+    &:before {
+      content: '- ';
+      position: absolute;
+      right: calc( 100% - #{$p_padding});
+    }
+    &.p_company {
+      font-size: 1.8rem;
+      margin: 2rem 0 1rem -1.3rem;
+      &:before {
+        content: ''
+      }
+      &:before {
+        right: calc( 100% - #{$p_padding});
+      }
+    }
+  }
+}

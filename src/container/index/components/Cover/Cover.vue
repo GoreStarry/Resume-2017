@@ -53,37 +53,28 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@import './styles/Cover.scss';
-
+<style lang="scss" scoped>
+// land[ flex-direction: row ] , port[ flex-direction: col ]
 .Cover__container {
   display: flex;
-  justify-content: row;
+  flex-direction: row;
   position: fixed;
   left: 0;
   top: 0;
   width: 100vw;
   height: 100vh;
-  transform-origin: center; // animation: cover_zoom 2s linear infinite;
-}
-
-@keyframes cover_zoom {
-  form {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(8);
-  }
+  transform-origin: center;
 }
 
 .wall__fill {
+  margin: -2px;
   flex: 1;
   background-color: brown;
 }
 
 .cover__man {
   position: absolute;
-  bottom: -30px;
+  bottom: -35px;
   left: 0;
   height: 90vh;
 }
@@ -107,5 +98,13 @@ export default {
   right: 1.5rem;
   bottom: 2rem;
   font-size: 1.5rem;
+}
+
+@media screen and (orientation: landscape) {
+  @import './styles/_landCover.scss';
+}
+
+@media screen and (orientation: portrait) {
+  @import './styles/_portCover.scss';
 }
 </style>

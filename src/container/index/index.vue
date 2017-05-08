@@ -1,13 +1,14 @@
 <template>
   <div class="Index">
     <starry-bg></starry-bg>
+    <!--box__planets is for overflow hidden-->
     <div :style="{height: planetBoxHeight}" class="box__planets">
-      <planet v-for="planet in planet_datas" :planetOpen="planet_open" :key="planet.name_en" @openPlanet="openPlanet" :name_en="planet.name_en" :name_zh="planet.name_zh" :color_planet="planet.color_planet" :color_planet_shadow="planet.color_planet_shadow" :color_name="planet.color_name"></planet>
-      <!--<planet-02 @openPlanet="openPlanet" name_en="Skills" name_zh="技能" color_planet="#d12c2c" color_planet_shadow="#791313" color_name="#5edafd"></planet-02>-->
-      <!--<planet-02 @openPlanet="openPlanet" name_en="Work" name_zh="作品集" color_planet="#1D71B8" color_planet_shadow="#134a79" color_name="#5edafd"></planet-02>-->
-      <!--<planet-02 @openPlanet="openPlanet" name_en="About Me" name_zh="關於我" color_planet="#1aac16" color_planet_shadow="#127020" color_name="#5edafd"></planet-02>-->
+      <!--box__innerPlanets is for flexbox-->
+      <div class="box__innerPlanets">
+        <planet v-for="planet in planet_datas" :planetOpen="planet_open" :key="planet.name_en" @openPlanet="openPlanet" :name_en="planet.name_en" :name_zh="planet.name_zh" :color_planet="planet.color_planet" :color_planet_shadow="planet.color_planet_shadow" :color_name="planet.color_name"></planet>
+      </div>
     </div>
-    <div v-show="planet_open" class="box__detail">
+    <div :style="{pointerEvents: planet_open ? 'initial' : 'none'}" class="box__detail">
       <img @click="closePlanet" v-show="planet_open" class="btn__closePlanet" src="./images/repeat.svg" alt="">
       <skill-detail @updatePlanetBoxHeight="updatePlanetBoxHeight" :planetOpen="planet_open==planet_datas[0].name_en" :planetColor="planet_datas[0].color_planet"></skill-detail>
       <works-detail @updatePlanetBoxHeight="updatePlanetBoxHeight" :planetOpen="planet_open==planet_datas[1].name_en" :planetColor="planet_datas[1].color_planet"></works-detail>
@@ -19,11 +20,20 @@
 
 <script> 
 import StarryBG from './components/StarryBg/StarryBg.vue';
-import Planet from './components/Planet/Planet.vue';
 import Cover from './components/Cover/Cover.vue';
 import Skills from './components/Skills/Skills.vue';
 import AboutMe from './components/AboutMe/AboutMe.vue';
 import Works from './components/Works/Works.vue';
+import Planet from './components/Planet/Planet.vue';
+
+// TODO: 星球放大的y定位制定
+
+// TODO: Big
+// TODO: 解決星球過於分散
+
+// TODO: mid
+
+// TODO: portrait
 
 export default {
   name: 'Index',
@@ -82,35 +92,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './styles/index.scss';
+.Index {}
 
-.fade-enter,
-.fade-leave-to {
-  opacity: 0
-}
-
-.Index {
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: center;
-  // align-items: center;
-  // min-height: 100vh;
-}
-
-.box__planets {
+.box__planets,
+.box__innerPlanets {
   box-sizing: border-box;
   position: absolute;
   left: 0;
   top: 0;
   width: 100vw;
-  height: 100vh;
-  padding: 0 5rem;
-  overflow: hidden;
+  height: 100vh; // it will be changed by style for detail content height
+}
 
+.box__planets {
+  overflow: hidden;
+}
+
+.box__innerPlanets {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  align-items: flex-start;
+  align-items: center;
+
+  padding: 0 5rem;
 }
 
 .planet__active {
@@ -127,6 +131,8 @@ export default {
       z-index: 1;
       top: 5rem;
       right: 5rem;
+      background-color: rgba(black, 0.5);
+      box-shadow: -0.2rem 0.2rem 1rem black;
       transition: 0.2s linear;
       border-radius: 0.5rem;
       border: solid 1px white;
@@ -139,5 +145,13 @@ export default {
       }
     }
   }
+}
+
+@media screen and (orientation: landscape) {
+  @import './styles/_land_index.scss';
+}
+
+@media screen and (orientation: portrait) {
+  @import './styles/_port_index.scss';
 }
 </style>

@@ -1,0 +1,29 @@
+$planet_size: 13vh;
+.box__innerPlanets {
+  top: auto;
+}
+
+.planet {
+  width: $planet_size;
+  height: #{$planet_size*1.2};
+}
+
+.text__title {
+  font-size: 2vw;
+}
+
+$ring_size: 33vh;
+.ring {
+  width: $ring_size;
+  height: $ring_size;
+  animation: ring_rotate 60s linear infinite;
+}
+
+@keyframes ring_rotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}

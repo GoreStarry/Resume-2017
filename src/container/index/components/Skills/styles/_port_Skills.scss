@@ -1,0 +1,30 @@
+.box__Skills {
+  h3 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    text-shadow: 0.5rem 0.5rem 0.5rem black;
+    &:not(:first-of-type) {
+      margin-top: 4rem;
+    }
+  }
+  p {
+    margin: 1.5rem 0;
+    font-size: 2rem;
+    font-weight: bold;
+    line-height: 5rem;
+    text-indent: 0;
+    color: black;
+    span {
+      font-weight: normal;
+      color: white;
+      display: block;
+      padding: 0 1rem 0 3rem;
+    }
+  }
+}
+
+section {
+  padding: 0 1rem;
+  width: 90vw;
+}

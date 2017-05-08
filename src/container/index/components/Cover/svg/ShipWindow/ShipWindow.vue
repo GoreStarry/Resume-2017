@@ -130,12 +130,7 @@ export default {
   font-family: 'Abril Fatface', cursive;
 }
 
-
-#g_nameplate {}
-
-@keyframes scale {
-  to {
-    transform: scale(5);
-  }
+@media screen and (orientation: portrait) {
+  @import './styles/_port_ship.scss'
 }
 </style>

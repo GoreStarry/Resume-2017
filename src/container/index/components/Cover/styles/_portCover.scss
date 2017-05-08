@@ -1,0 +1,22 @@
+.Cover__container {
+  flex-direction: column;
+}
+
+.cover__man {
+  display: none; // width: 70vw;
+  // height: 70vw;
+}
+
+.cover__computer {
+  display: none; // width: 50vw;
+  // height: auto;
+}
+
+#btn__skip {
+  opacity: 0;
+  font-size: 3rem;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  left: 0;
+}
