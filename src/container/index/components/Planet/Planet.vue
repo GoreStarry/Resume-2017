@@ -43,6 +43,13 @@
 
 <script>
 import { TweenMax, TimelineMax } from 'gsap';
+import MobileDetect from 'mobile-detect';
+
+//prevent resize event emit when mobile broswer scroll up/down and address bar showed/hidden
+var md = new MobileDetect(window.navigator.userAgent);
+const windowInnerHeightWithAddressBar = md.mobile() ? window.innerHeight : false;
+
+
 let zoomLock = false; // will lock three planet component click zoom
 export default {
   name: 'Planet',
@@ -90,9 +97,11 @@ export default {
       if (window.innerWidth >= window.innerHeight) { // landscape
         this.planet_offsetLeft = getPositionX(planet) + planet.offsetWidth / 2;
         this.planet_offsetTop = 0;
-      } else {
-        this.planet_offsetTop = getPositionY(planet) + planet.offsetHeight / 2;
-        this.planet_offsetLeft = 0;
+      } else {// portrait 
+        if(!this.planetOpen){ //prevent resize event emit when mobile broswer scroll up/down and address bar showed/hidden
+          this.planet_offsetTop = getPositionY(planet) + planet.offsetHeight / 2;
+          this.planet_offsetLeft = 0;
+        }
       }
 
       function getPositionX(element) {
@@ -133,7 +142,7 @@ export default {
         y = 1250 - window.innerHeight / 2; // 1100 = planet heiht 100px * scale 22 / 2
       } else { // portrait
         x = false;
-        y = window.innerHeight * 1.7 - this.planet_offsetTop;
+        y = (windowInnerHeightWithAddressBar||window.innerHeight) * 1.7 - this.planet_offsetTop;
       }
 
       this.tl_zoom = new TimelineMax()

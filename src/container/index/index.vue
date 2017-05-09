@@ -26,15 +26,6 @@ import AboutMe from './components/AboutMe/AboutMe.vue';
 import Works from './components/Works/Works.vue';
 import Planet from './components/Planet/Planet.vue';
 
-// TODO: 星球放大的y定位制定
-
-// TODO: Big
-// TODO: 解決星球過於分散
-
-// TODO: mid
-
-// TODO: portrait
-
 export default {
   name: 'Index',
   components: {
