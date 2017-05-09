@@ -4,8 +4,8 @@
     <!--box__planets is for overflow hidden-->
     <div :style="{height: planetBoxHeight}" class="box__planets">
       <!--box__innerPlanets is for flexbox-->
-      <div class="box__innerPlanets">
-        <planet v-for="planet in planet_datas" :planetOpen="planet_open" :key="planet.name_en" @openPlanet="openPlanet" :name_en="planet.name_en" :name_zh="planet.name_zh" :color_planet="planet.color_planet" :color_planet_shadow="planet.color_planet_shadow" :color_name="planet.color_name"></planet>
+      <div class="box__innerPlanets" :style="{initInnerHeight}">
+        <planet v-for="(planet, index) in planet_datas" :planetIndex="index" :planetOpen="planet_open" :key="planet.name_en" @openPlanet="openPlanet" :name_en="planet.name_en" :name_zh="planet.name_zh" :color_planet="planet.color_planet" :color_planet_shadow="planet.color_planet_shadow" :color_name="planet.color_name"></planet>
       </div>
     </div>
     <div :style="{pointerEvents: planet_open ? 'initial' : 'none'}" class="box__detail">
@@ -41,6 +41,7 @@ export default {
       cover_mount: true,
       planet_open: false,
       planetBoxHeight: false,
+      initInnerHeight: false,//for mobile vh problem
       planet_datas: [
         {
           name_en: "Skills",
@@ -64,6 +65,9 @@ export default {
       ],
     }
   },
+  mounted() {
+    this.initInnerHeight = `height: ${window.innerHeight}`;
+  },
   methods: {
     unmountCover() {
       this.cover_mount = false;
@@ -84,6 +88,7 @@ export default {
 <style lang="scss" scoped>
 .Index {}
 
+
 .box__planets,
 .box__innerPlanets {
   box-sizing: border-box;
@@ -96,15 +101,6 @@ export default {
 
 .box__planets {
   overflow: hidden;
-}
-
-.box__innerPlanets {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-
-  padding: 0 5rem;
 }
 
 .planet__active {

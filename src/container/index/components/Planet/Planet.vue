@@ -1,9 +1,6 @@
 <template lang="pug">
 .box__planet(
-      @mouseenter="hoverEnter"
-      @mouseleave="hoverLeave" 
-      @click="zoomInCheck")
-  slot
+      )
   svg.ring.ring--en(viewBox="0 0 400 400")
     defs
       path#path__ring--en(d="M100,200a100,100 0 1,1 200,0a100,100 0 1,1 -200,0")
@@ -15,8 +12,10 @@
     text.text_ring.text_ring--en
       textPath(xlink:href="#path__ring--en" startOffset="20%" text-anchor="middle") | {{name_zh}} |
   -var tile_padding = 50;
-  svg.planet(
-      x="0px" y="0px" viewBox=`0 ${-tile_padding} 512 ${512+tile_padding*2}` style="enable-background:new 0 0 512 512;")
+  svg.planet(@mouseenter="hoverEnter"
+      @mouseleave="hoverLeave" 
+      @click="zoomInCheck"
+      x="0px" y="0px" viewBox=`0 ${-tile_padding} 512 ${512+tile_padding*2}`)
     defs
       path#path__title(d="M16,256a240,240 0 1,1 480,0a240,240 0 1,1 -480,0")
     path(
@@ -68,6 +67,7 @@ export default {
     color_planet_shadow: String,
     color_name: String,
     planetOpen: [String, Boolean],
+    planetIndex: Number,
   },
   watch: {
     planetOpen(newVal, oldVal) {
@@ -95,76 +95,79 @@ export default {
     getPlanetOffset() {
       var planet = this.$el;
       if (window.innerWidth >= window.innerHeight) { // landscape
-        this.planet_offsetLeft = getPositionX(planet) + planet.offsetWidth / 2;
+        this.planet_offsetLeft = - (this.planetIndex - 1) * (window.innerWidth * 0.15 + 100)
         this.planet_offsetTop = 0;
       } else {// portrait 
-        if(!this.planetOpen){ //prevent resize event emit when mobile broswer scroll up/down and address bar showed/hidden
-          this.planet_offsetTop = getPositionY(planet) + planet.offsetHeight / 2;
+        if (!this.planetOpen) { //prevent resize event emit when mobile broswer scroll up/down and address bar showed/hidden
+          this.planet_offsetTop = (this.planetIndex - 1) * window.innerHeight * 0.23;
+          console.log(this.planet_offsetTop);
           this.planet_offsetLeft = 0;
         }
       }
 
-      function getPositionX(element) {
-        var xPosition = 0;
-        while (element) {
-          xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
-          element = element.offsetParent;
-        }
-        return xPosition;
-      }
+      // function getPositionX(element) {
+      //   var xPosition = 0;
+      //   while (element) {
+      //     xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
+      //     element = element.offsetParent;
+      //   }
+      //   return xPosition;
+      // }
 
-      function getPositionY(element) {
-        var yPosition = 0;
-        while (element) {
-          yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
-          element = element.offsetParent;
-        }
-        return yPosition;
-      }
+      // function getPositionY(element) {
+      //   var yPosition = 0;
+      //   while (element) {
+      //     yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
+      //     element = element.offsetParent;
+      //   }
+      //   return yPosition;
+      // }
 
     },
-    zoomInCheck(){
-      if(zoomLock){
+    zoomInCheck() {
+      if (zoomLock) {
         return false;
-      }else{
-        zoomLock=true;  
+      } else {
+        zoomLock = true;
         this.zoomInPlaent();
       }
     },
     zoomInPlaent() {
-      var sub = this.$el.querySelector(".planet");
+      var planet = this.$el.querySelector(".planet");
       var title = this.$el.querySelector(".text__title")
       var cloud = this.$el.querySelectorAll(".cloud");
       var x, y;
 
-      if (this.planet_offsetLeft) { // landscape
-        x = window.innerWidth / 2 - this.planet_offsetLeft;
+      if (window.innerWidth >= window.innerHeight) { // landscape
+        x = this.planet_offsetLeft;
         y = 1250 - window.innerHeight / 2; // 1100 = planet heiht 100px * scale 22 / 2
       } else { // portrait
         x = false;
-        y = (windowInnerHeightWithAddressBar||window.innerHeight) * 1.7 - this.planet_offsetTop;
+        y = (windowInnerHeightWithAddressBar || window.innerHeight) * 1.21 - this.planet_offsetTop;
+        console.log(y);
       }
 
       this.tl_zoom = new TimelineMax()
-        .set(sub, {
+        .set(this.$el, {
           zIndex: 1,
         })
-        .to(sub, 0.5, {
-          scale: 22,
+        .to(planet, 0.5, {
+          force3D: false,
+          scale: 1,
           x,
           y,
           transformOrigin: "center center",
-          force3D: false,
           ease: Power4.easeIn,
         })
         .to(title, 0.5, {
           opacity: 1,
+          force3D: false,
           attr: {
             startOffset: '25%',
           },
           onComplete: () => {
             this.$emit("openPlanet", this.name_en)
-            this.$once('click',this.tl_zoom);
+            this.$once('click', this.tl_zoom);
           },
         })
         .to(cloud, 0.1, {
@@ -212,10 +215,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$planet_size: 100px;
+$planet_origin_size: 100px;
+$planet_size: $planet_origin_size*22;
 
 .box__planet {
-  position: relative; // top: calc( 50vh - #{$planet_size/2});
+  position: absolute;
+  pointer-events: none;
+  top: 50%;
+  left: 50vw;
+  &:nth-child(1) {
+    transform: translate(calc( -50% - #{$planet_origin_size} - 15vw), -50%);
+  }
+  &:nth-child(2) {
+    transform: translate(-50%, -50%);
+  }
+  &:nth-child(3) {
+    transform: translate(calc( -50% + #{$planet_origin_size} + 15vw), -50%);
+  }
 }
 
 .text__title {
@@ -231,6 +247,9 @@ $planet_size: 100px;
   cursor: pointer;
   width: $planet_size;
   height: #{$planet_size*1.2};
+  transform: scale(0.045);
+  transform-origin: center;
+  pointer-events: all;
 }
 
 .ring {

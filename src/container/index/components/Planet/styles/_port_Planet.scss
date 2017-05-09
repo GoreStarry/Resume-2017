@@ -1,6 +1,16 @@
-$planet_size: 13vh;
-.box__innerPlanets {
-  top: auto;
+$planet_origin_size: 13vh;
+$planet_size: 13vh*22;
+$ring_size: 33vh;
+.box__planet {
+  &:nth-child(1) {
+    transform: translate(-50%, calc( -51.2% - #{$planet_origin_size + 11vh}));
+  }
+  &:nth-child(2) {
+    transform: translate(-50%, -51.2%);
+  }
+  &:nth-child(3) {
+    transform: translate( -50%, calc( -51.2% + #{$planet_origin_size + 11vh}));
+  }
 }
 
 .planet {
@@ -12,7 +22,6 @@ $planet_size: 13vh;
   font-size: 2vw;
 }
 
-$ring_size: 33vh;
 .ring {
   width: $ring_size;
   height: $ring_size;
