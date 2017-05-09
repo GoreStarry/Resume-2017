@@ -167,7 +167,6 @@ export default {
           },
           onComplete: () => {
             this.$emit("openPlanet", this.name_en)
-            this.$once('click', this.tl_zoom);
           },
         })
         .to(cloud, 0.1, {
