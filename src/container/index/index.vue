@@ -14,7 +14,7 @@
       <works-detail @updatePlanetBoxHeight="updatePlanetBoxHeight" :planetOpen="planet_open==planet_datas[1].name_en" :planetColor="planet_datas[1].color_planet"></works-detail>
       <aboutme-detail @updatePlanetBoxHeight="updatePlanetBoxHeight" :planetOpen="planet_open==planet_datas[2].name_en" :planetColor="planet_datas[2].color_planet"></aboutme-detail>
     </div>
-    <svg-cover v-if="cover_mount" @unmountCover="unmountCover"></svg-cover>
+    <!--<svg-cover v-if="cover_mount" @unmountCover="unmountCover"></svg-cover>-->
   </div>
 </template>
 

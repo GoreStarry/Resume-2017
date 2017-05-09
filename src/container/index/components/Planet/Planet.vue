@@ -2,7 +2,7 @@
 .box__planet(
       @mouseenter="hoverEnter"
       @mouseleave="hoverLeave" 
-      @click="zoomInPlaent")
+      @click="zoomInCheck")
   slot
   svg.ring.ring--en(viewBox="0 0 400 400")
     defs
@@ -43,6 +43,7 @@
 
 <script>
 import { TweenMax, TimelineMax } from 'gsap';
+let zoomLock = false; // will lock three planet component click zoom
 export default {
   name: 'Planet',
   data() {
@@ -113,6 +114,14 @@ export default {
       }
 
     },
+    zoomInCheck(){
+      if(zoomLock){
+        return false;
+      }else{
+        zoomLock=true;  
+        this.zoomInPlaent();
+      }
+    },
     zoomInPlaent() {
       var sub = this.$el.querySelector(".planet");
       var title = this.$el.querySelector(".text__title")
@@ -146,11 +155,13 @@ export default {
           },
           onComplete: () => {
             this.$emit("openPlanet", this.name_en)
+            this.$once('click',this.tl_zoom);
           },
         })
         .to(cloud, 0.1, {
           opacity: 0,
           onReverseComplete: () => {
+            zoomLock = false;
           }
         })
     },
