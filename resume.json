@@ -1,0 +1,179 @@
+{
+  "basics": {
+    "name": "Gore Wang（王偉泰）",
+    "label": "Front-End Engineer",
+    "picture": "https://avatars3.githubusercontent.com/u/13726538?v=3&s=460",
+    "email": "sunrise91.t3@gmail.com",
+    "phone": "+886 988 104 329",
+    "website": "https://gorestarry.github.io/Resume-2017/dist/index.html",
+    "summary": "(=請務必造訪我親手製作的<a href=\"https://gorestarry.github.io/Resume-2017/dist/index.html\">履歷網站</a>=)<br/>擅長組織溝通、邏輯分析、問題克服＆創意實現。<br/>對於實現製作好的產品有很大的熱情，樂於征服市場與使用者。<br/>作為一個曾參與創業的經驗者，我能理解細節要求對於產品成敗的關鍵性。<br/>所以對於工作上的要求，我絕不會被牽制在一個「我覺得沒差」的心理狀態，而願意將工作務實的做到更高的需求層級。",
+    "location": {
+      "city": "Taipei",
+      "countryCode": "Taiwan",
+      "region": ""
+    },
+    "profiles": [{
+        "network": "GitHub",
+        "username": "GoreStarry",
+        "url": "https://github.com/GoreStarry"
+      },
+      {
+        "network": "CodePen",
+        "username": "GoreWang",
+        "url": "https://codepen.io/GoreWang/"
+      }
+    ]
+  },
+  "work": [{
+      "company": "燿麒科技",
+      "position": "Front-End Engineer",
+      "website": "http://www.lbstek.com/zh-tw/",
+      "startDate": "2015-9",
+      "endDate": "2016-12",
+      "summary": "",
+      "highlights": [
+        "新版愛在轉角：網站開發（聊天室,雷達動態,照片牆,緣份地圖...）",
+        "易賾單品商城：網站開發（商品、付款...）",
+        "韋氏中醫：形象官網、WebVR應用開發、",
+        "愛在轉角：網站維護，「愛在發聲」開發、"
+      ]
+    },
+    {
+      "company": "謎攻城工作室（密室逃脫）",
+      "position": "設計主持",
+      "website": "https://vimeo.com/113194620",
+      "startDate": "2013/5",
+      "endDate": "2015/6",
+      "summary": "企劃、製作、平面設計、網站設計、主持",
+      "highlights": []
+    }
+  ],
+  "volunteer": [{
+      "organization": "Taipei WebGL&WebVR",
+      "position": "WebVR Developer",
+      "website": "https://www.meetup.com/TPE-WebGL-WebVR/photos/27783535/",
+      "startDate": "2017-04-19",
+      "endDate": "2017-04-19",
+      "summary": "擔任 <a href=\"http://slides.com/gorestarry/deck-2#/\">WebVR vs Chinese</a> 主題講者",
+      "highlights": [
+        "分享關於中文字體在WebVR的相關侷限、問題、使用策略。"
+      ]
+    },
+    {
+      "organization": "線上React讀書會",
+      "position": "Draft.js Developer",
+      "website": "https://www.youtube.com/watch?v=bnorojYDays&t=265s",
+      "startDate": "2017-3",
+      "endDate": "2017-3",
+      "summary": "Draft.js <a href=\"http://slides.com/gorestarry/deck-1\">用React實作自由度超高的Rich Text Editor</a>",
+      "highlights": [
+        "講解Draft.js在immutable資料格式的架構，與使用策略。"
+      ]
+    },
+    {
+      "organization": "Web Tech Topic",
+      "position": "WebVR Developer",
+      "website": "https://www.facebook.com/groups/webtechtopic/?fref=ts",
+      "startDate": "2016/12",
+      "endDate": "2016/12",
+      "summary": "A-Frame <a href=\"http://slides.com/gorestarry/deck#/\">WebVR 技術分享</a>",
+      "highlights": [
+        "A-Frame初探，以及應用經驗分享"
+      ]
+    }
+  ],
+  "education": [{
+    "institution": "National Chung Hsing University",
+    "area": "Electronics Engineering",
+    "studyType": "Bachelor",
+    "startDate": "2007",
+    "endDate": "2010",
+    "gpa": "",
+    "courses": []
+  }],
+  "awards": [],
+  "publications": [{
+      "name": "Stories Kingdom",
+      "publisher": "GitHub",
+      "releaseDate": "2017-5-9",
+      "website": "https://github.com/GoreStarry/Stories_Kingdom",
+      "summary": "為了能在電腦撰寫中掌握中文直式排版的文韻，並保留傳統書頁「翻頁」產生的段落性閱讀節奏而撰寫的中文寫作平台。<br/>- React,Express, Mongo, Mongoose, Draft.js, Webpack, Nightwatch, Chai, Sinon..."
+    },
+    {
+      "name": "Nuns on the run",
+      "publisher": "GitHub",
+      "releaseDate": "2016-11-30",
+      "website": "https://github.com/GoreStarry/nuns_on_the_run",
+      "summary": "將桌遊轉成再投影機上即時顯示所有玩家手機輸入的移動操作，玩家並可用手機拍出套上修女造型的照片。"
+    },
+    {
+      "name": "Remiel",
+      "publisher": "GitHub",
+      "releaseDate": "2015-9-2",
+      "website": "https://github.com/GoreStarry/Remiel_github",
+      "summary": "線上圖文展演平台"
+    }
+  ],
+  "skills": [{
+      "name": "Front-End",
+      "keywords": [
+        "ES6",
+        "React",
+        "GSAP(GreenSock)",
+        "A-frame(WebVR)",
+        "Sass(SCSS)",
+        "Vue.js",
+        "AngularJS(1)",
+        "Rx.js",
+        "Pug",
+        "Nightwatch",
+        "Chai",
+        "Sinon"
+      ]
+    },
+    {
+      "name": "Back-End",
+      "keywords": [
+        "MongoDB(Mongoose)",
+        "Express"
+      ]
+    },
+    {
+      "name": "Tools",
+      "keywords": [
+        "Webpack",
+        "Gulp",
+        "Git",
+        "Mercurial(hg)",
+        "npm"
+      ]
+    },
+    {
+      "name": "Design",
+      "keywords": [
+        "Photoshop",
+        "Illustrator (Limited)",
+        "PTC Creo Elements/Direct",
+        "Pro/E"
+      ]
+    }
+  ],
+  "languages": [{
+    "language": "English",
+    "fluency": "Intermediate"
+  }],
+  "interests": [{
+      "name": "Painting",
+      "keywords": []
+    },
+    {
+      "name": "Road Bike",
+      "keywords": []
+    },
+    {
+      "name": "Game",
+      "keywords": []
+    }
+  ],
+  "references": []
+}
