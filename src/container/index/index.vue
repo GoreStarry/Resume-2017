@@ -9,13 +9,13 @@
       </div>
       <div class="box__link">
         <a href="mailto:sunrise91.t3@gmail.com">
-          <img src="./components/AboutMe/images/icons/envelop.svg" alt="email icon" class="icon">
+          <img src="./images/icons/envelop.svg" alt="email icon" class="icon">
         </a>
         <a target="_blank" href="https://github.com/GoreStarry">
-          <img src="./components/AboutMe/images/icons/github.svg" alt="github icon" class="icon">
+          <img src="./images/icons/github.svg" alt="github icon" class="icon">
         </a>
         <a href="tel:+886988104329">
-          <img src="./components/AboutMe/images/icons/phone2.svg" alt="phone icon" class="icon">
+          <img src="./images/icons/phone2.svg" alt="phone icon" class="icon">
         </a>
       </div>
     </div>
