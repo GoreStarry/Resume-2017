@@ -9,3 +9,14 @@
   padding: 1rem;
   border-radius: 1rem;
 }
+
+.box__planets {
+  perspective: 100vw;
+}
+
+$box_link_padding: 1rem 0.5rem;
+.box__link {
+  padding: $box_link_padding;
+  width: 65vw;
+  height: 10vw;
+}
