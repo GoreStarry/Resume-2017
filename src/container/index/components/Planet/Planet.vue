@@ -238,7 +238,6 @@ $planet_size: $planet_origin_size*22;
   fill: white;
   opacity: 0;
   font-family: 'Orbitron', sans-serif;
-  font-weight: bold;
 }
 
 .planet {

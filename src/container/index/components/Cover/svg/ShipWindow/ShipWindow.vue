@@ -119,14 +119,12 @@ export default {
 }
 
 #text_f2e {
-  font-weight: bold;
   text-align: center;
   font-size: 28px;
   font-family: 'Orbitron', sans-serif;
 }
 
 .text__name {
-  font-weight: bold;
   font-family: 'Abril Fatface', cursive;
 }
 
